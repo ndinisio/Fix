@@ -2,6 +2,19 @@
 
 All notable changes to FIX. Grouped by version, newest first.
 
+## v0.7 — More first-build fixes
+
+### Fixed
+- `SafetyWarning` and `CareTip` decoded a bare string by calling `self.init`,
+  which makes the whole initialiser delegating — and a delegating initialiser
+  may not assign stored properties on any path, including the object path. Both
+  paths now assign directly.
+- Reverted the `nonisolated(unsafe)` added to `NetworkMonitor` in v0.6: both
+  `NWPathMonitor` and `DispatchQueue` are `Sendable`, so the constants were
+  already implicitly nonisolated and the attribute only produced warnings.
+- Project marked as created and last checked by Xcode 26, so it stops
+  offering to update to recommended settings.
+
 ## v0.6 — First build fixes
 
 ### Fixed

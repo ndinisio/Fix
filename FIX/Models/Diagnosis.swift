@@ -281,7 +281,9 @@ struct SafetyWarning: Codable, Hashable, Sendable, Identifiable {
                     .init(codingPath: decoder.codingPath, debugDescription: "Empty warning.")
                 )
             }
-            self.init(text: trimmed)
+            self.id = UUID().uuidString
+            self.text = trimmed
+            self.severity = .caution
             return
         }
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -326,7 +328,10 @@ struct CareTip: Codable, Hashable, Sendable, Identifiable {
                     .init(codingPath: decoder.codingPath, debugDescription: "Empty care tip.")
                 )
             }
-            self.init(title: trimmed, detail: "")
+            self.id = UUID().uuidString
+            self.title = trimmed
+            self.detail = ""
+            self.cadence = nil
             return
         }
         let container = try decoder.container(keyedBy: CodingKeys.self)

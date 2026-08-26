@@ -181,14 +181,14 @@ add(f'''\t\t{PROJECT} /* Project object */ = {{
 \t\t\tisa = PBXProject;
 \t\t\tattributes = {{
 \t\t\t\tBuildIndependentTargetsInParallel = 1;
-\t\t\t\tLastSwiftUpdateCheck = 1600;
-\t\t\t\tLastUpgradeCheck = 1600;
+\t\t\t\tLastSwiftUpdateCheck = 2600;
+\t\t\t\tLastUpgradeCheck = 2600;
 \t\t\t\tTargetAttributes = {{
 \t\t\t\t\t{APP_TARGET} = {{
-\t\t\t\t\t\tCreatedOnToolsVersion = 16.0;
+\t\t\t\t\t\tCreatedOnToolsVersion = 26.0;
 \t\t\t\t\t}};
 \t\t\t\t\t{TEST_TARGET} = {{
-\t\t\t\t\t\tCreatedOnToolsVersion = 16.0;
+\t\t\t\t\t\tCreatedOnToolsVersion = 26.0;
 \t\t\t\t\t\tTestTargetID = {APP_TARGET};
 \t\t\t\t\t}};
 \t\t\t\t}};
