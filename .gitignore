@@ -1,0 +1,42 @@
+# macOS
+.DS_Store
+
+# Xcode — user state
+xcuserdata/
+*.xcuserstate
+*.xcscmblueprint
+*.xccheckout
+*.moved-aside
+
+# Build products
+build/
+DerivedData/
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# Swift Package Manager
+.build/
+.swiftpm/
+Packages/
+Package.resolved
+
+# CocoaPods / Carthage (not used, but keep the repo tidy if ever added)
+Pods/
+Carthage/Build/
+
+# Playgrounds
+timeline.xctimeline
+playground.xcworkspace
+
+# Secrets — never commit these.
+# See Config/Secrets.example.xcconfig for the template.
+Config/Secrets.xcconfig
+.env
+.env.*
+!.env.example
+Secrets.swift
+Config.local.swift
+*.p12
+*.mobileprovision

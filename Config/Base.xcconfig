@@ -1,0 +1,20 @@
+// FIX — shared build configuration.
+//
+// Everything here is a *default*. Real values belong in Config/Secrets.xcconfig,
+// which is git-ignored. Copy Config/Secrets.example.xcconfig to get started.
+//
+// The include below is optional (`#include?`), so a fresh clone builds and runs
+// without any configuration at all — the app then reports "Not configured" in
+// Settings instead of failing at launch.
+
+// Preferred production setup: a relay you control that holds the provider keys.
+// Host (and optional path) only — no scheme. xcconfig treats "//" as a comment,
+// so "https://" cannot be written literally here. The app prepends https://.
+FIX_RELAY_BASE_URL =
+
+// Development-only direct access. See README — "Configuration & secrets".
+FIX_GROQ_API_KEY =
+FIX_GROQ_MODEL = llama-3.3-70b-versatile
+FIX_YOUTUBE_API_KEY =
+
+#include? "Secrets.xcconfig"
