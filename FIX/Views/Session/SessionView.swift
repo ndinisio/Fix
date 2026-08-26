@@ -8,6 +8,7 @@ import SwiftUI
 /// urgent thing (safety) first and the least urgent (escalation) last.
 struct SessionView: View {
     @State private var model: SessionViewModel
+    @State private var isShowingSettings = false
 
     @Environment(ServiceContainer.self) private var services
     @Environment(\.dismiss) private var dismiss
@@ -26,6 +27,9 @@ struct SessionView: View {
                     ToolbarItem(placement: .topBarTrailing) { actionsMenu }
                 }
             }
+            .sheet(isPresented: $isShowingSettings) {
+                SettingsView()
+            }
             .task { await model.start() }
     }
 
@@ -35,7 +39,11 @@ struct SessionView: View {
         case .loading(let phase):
             DiagnosisProgressView(phase: phase, includesVideos: services.settings.includeVideos)
         case .failed(let error):
-            ErrorStateView(error: error, retry: { await model.retry() })
+            ErrorStateView(
+                error: error,
+                retry: { await model.retry() },
+                openSettings: { isShowingSettings = true }
+            )
         case .ready:
             results
         }

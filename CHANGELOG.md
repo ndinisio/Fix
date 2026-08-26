@@ -2,6 +2,28 @@
 
 All notable changes to FIX. Grouped by version, newest first.
 
+## v0.8 — Enter an API key in the app
+
+### Added
+- Settings → Services now leads to a setup screen per service where the user
+  pastes their own key. Saving runs one real request against the provider, so
+  "Ready" means the credentials were accepted rather than merely entered.
+- `KeychainStorage` keeps keys in the device Keychain with
+  `afterFirstUnlockThisDeviceOnly` — never in `UserDefaults`, never in the
+  bundle, never in Git. `SecretStorage` abstracts it so the rules are testable.
+- `AppConfiguration.applying(groqAPIKey:youTubeAPIKey:)` layers user keys over
+  the build configuration. A relay is never overridden by a key on the device;
+  without one, a key the user typed beats a key baked into the build.
+- `ServiceContainer.credentialsDidChange()` rebuilds the pipeline in place, so a
+  new key takes effect without restarting the app.
+- The Diagnose bar and the diagnosis error state both offer the way to Settings
+  when no provider is configured, instead of leaving a dead button.
+
+### Notes
+- A key the user enters on their own device and stores in the Keychain is a
+  different thing from shipping a developer's secret inside the binary. A relay
+  remains the right answer for a build distributed to other people.
+
 ## v0.7 — More first-build fixes
 
 ### Fixed

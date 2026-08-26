@@ -9,10 +9,20 @@ import Observation
 @MainActor
 @Observable
 final class ServiceContainer {
-    let configuration: AppConfiguration
+    /// Configuration from the build alone, before anything the user entered.
+    let buildConfiguration: AppConfiguration
+    let credentials: CredentialStore
     let networkMonitor: NetworkMonitor
     let settings: AppSettings
-    let troubleshooting: any TroubleshootingServicing
+
+    /// What the app is actually using: the build configuration with the user's
+    /// keys layered on top.
+    private(set) var configuration: AppConfiguration
+    private(set) var troubleshooting: any TroubleshootingServicing
+
+    /// Set when services were supplied directly, so rebuilding never replaces
+    /// what a preview or a test injected.
+    @ObservationIgnored private let injectedTroubleshooting: (any TroubleshootingServicing)?
 
     /// Anything not supplied is built here rather than in the signature:
     /// default argument expressions are evaluated outside the initialiser's
@@ -20,14 +30,33 @@ final class ServiceContainer {
     /// their own services in.
     init(
         configuration: AppConfiguration = .current,
+        credentials: CredentialStore? = nil,
         settings: AppSettings? = nil,
         networkMonitor: NetworkMonitor? = nil,
         troubleshooting: (any TroubleshootingServicing)? = nil
     ) {
-        self.configuration = configuration
+        let credentials = credentials ?? CredentialStore()
+        let effective = configuration.applying(
+            groqAPIKey: credentials.key(for: .ai),
+            youTubeAPIKey: credentials.key(for: .video)
+        )
+        self.buildConfiguration = configuration
+        self.credentials = credentials
         self.settings = settings ?? AppSettings()
         self.networkMonitor = networkMonitor ?? NetworkMonitor()
-        self.troubleshooting = troubleshooting ?? Self.makeTroubleshooting(for: configuration)
+        self.injectedTroubleshooting = troubleshooting
+        self.configuration = effective
+        self.troubleshooting = troubleshooting ?? Self.makeTroubleshooting(for: effective)
+    }
+
+    /// Rebuilds the pipeline after the user adds or removes a key, so a new
+    /// diagnosis uses it without restarting the app.
+    func credentialsDidChange() {
+        configuration = buildConfiguration.applying(
+            groqAPIKey: credentials.key(for: .ai),
+            youTubeAPIKey: credentials.key(for: .video)
+        )
+        troubleshooting = injectedTroubleshooting ?? Self.makeTroubleshooting(for: configuration)
     }
 
     /// Builds the diagnosis pipeline for a configuration.

@@ -20,11 +20,19 @@ struct SettingsView: View {
         NavigationStack {
             Form {
                 Section {
-                    LabeledContent("Diagnosis") {
-                        StatusLabel(isConfigured: services.configuration.isAIConfigured)
+                    NavigationLink {
+                        APIKeyView(service: .ai)
+                    } label: {
+                        LabeledContent(CredentialStore.Service.ai.title) {
+                            StatusLabel(isConfigured: services.configuration.isAIConfigured)
+                        }
                     }
-                    LabeledContent("Video search") {
-                        StatusLabel(isConfigured: services.configuration.isVideoSearchConfigured)
+                    NavigationLink {
+                        APIKeyView(service: .video)
+                    } label: {
+                        LabeledContent(CredentialStore.Service.video.title) {
+                            StatusLabel(isConfigured: services.configuration.isVideoSearchConfigured)
+                        }
                     }
                     Toggle("Include repair videos", isOn: $settings.includeVideos)
                         .disabled(!services.configuration.isVideoSearchConfigured)
@@ -103,10 +111,12 @@ struct SettingsView: View {
     }
 
     private var servicesFooter: String {
-        if services.configuration.isAIConfigured {
-            "Diagnosis runs on a service configured for this build. Turning videos off saves a request per diagnosis."
+        if services.buildConfiguration.usesRelay {
+            "This build sends requests through a relay that holds the credentials, so no key is needed here."
+        } else if services.configuration.isAIConfigured {
+            "Keys are kept in this device's Keychain. Turning videos off saves a request per diagnosis."
         } else {
-            "No AI provider is configured, so new diagnoses aren't available. History and saved devices still work."
+            "Add an AI provider key to diagnose problems. History and saved devices work without one."
         }
     }
 

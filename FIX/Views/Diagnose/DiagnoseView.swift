@@ -130,22 +130,38 @@ struct DiagnoseView: View {
                     .font(.footnote)
                     .foregroundStyle(.secondary)
             }
+            if !services.configuration.isAIConfigured {
+                // Without a provider the button cannot do anything, so the bar
+                // offers the step that unblocks it rather than a dead control.
+                Button {
+                    isShowingSettings = true
+                } label: {
+                    Label("Add an API key to diagnose", systemImage: "key")
+                        .font(.footnote)
+                }
+            }
             Button(action: startDiagnosis) {
                 Text("Diagnose")
                     .frame(maxWidth: .infinity)
             }
             .buttonStyle(.borderedProminent)
             .controlSize(.large)
-            .disabled(!model.canDiagnose)
-            .accessibilityHint(
-                model.canDiagnose
-                    ? "Diagnoses the problem you described"
-                    : "Add a device and describe the problem first"
-            )
+            .disabled(!model.canDiagnose || !services.configuration.isAIConfigured)
+            .accessibilityHint(diagnoseHint)
         }
         .padding(.horizontal)
         .padding(.vertical, 12)
         .background(.bar)
+    }
+
+    private var diagnoseHint: String {
+        if !services.configuration.isAIConfigured {
+            "Add an API key in Settings first"
+        } else if model.canDiagnose {
+            "Diagnoses the problem you described"
+        } else {
+            "Add a device and describe the problem first"
+        }
     }
 
     private func startDiagnosis() {

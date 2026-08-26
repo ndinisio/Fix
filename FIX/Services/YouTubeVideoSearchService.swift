@@ -33,6 +33,35 @@ final class YouTubeVideoSearchService: VideoSearchService {
         }
     }
 
+    /// Checks that the key works. Uses `videos.list`, which costs a single unit
+    /// of quota, rather than a search, which costs a hundred.
+    func validateCredentials() async throws {
+        switch transport {
+        case .relay(let baseURL):
+            guard var components = URLComponents(
+                url: baseURL.appending(path: "videos"), resolvingAgainstBaseURL: false
+            ) else { throw APIError.invalidResponse }
+            components.queryItems = [
+                URLQueryItem(name: "q", value: "test"),
+                URLQueryItem(name: "limit", value: "1")
+            ]
+            guard let url = components.url else { throw APIError.invalidResponse }
+            _ = try await client.data(for: URLRequest(url: url))
+        case .direct(let apiKey):
+            guard var components = URLComponents(
+                url: Self.directBaseURL.appending(path: "videos"), resolvingAgainstBaseURL: false
+            ) else { throw APIError.invalidResponse }
+            components.queryItems = [
+                URLQueryItem(name: "part", value: "id"),
+                URLQueryItem(name: "chart", value: "mostPopular"),
+                URLQueryItem(name: "maxResults", value: "1"),
+                URLQueryItem(name: "key", value: apiKey)
+            ]
+            guard let url = components.url else { throw APIError.invalidResponse }
+            _ = try await client.data(for: URLRequest(url: url))
+        }
+    }
+
     // MARK: - Relay
 
     private func relayResults(

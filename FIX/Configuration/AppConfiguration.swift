@@ -74,6 +74,29 @@ struct AppConfiguration: Sendable {
         )
     }
 
+    /// Returns a copy using keys the user supplied on the device.
+    ///
+    /// A relay is never overridden: it already holds the credentials on a
+    /// server, which is strictly better than a key sitting on a phone. Where
+    /// there is no relay, a key the user typed wins over one baked into the
+    /// build, because it is the more recent, more deliberate choice.
+    func applying(groqAPIKey: String?, youTubeAPIKey: String?) -> AppConfiguration {
+        var updated = self
+        if ai?.isRelay != true, let key = groqAPIKey?.nilIfBlank {
+            updated.ai = .direct(apiKey: key)
+        }
+        if video?.isRelay != true, let key = youTubeAPIKey?.nilIfBlank {
+            updated.video = .direct(apiKey: key)
+        }
+        return updated
+    }
+
+    /// True when this build points at a relay, in which case the app should not
+    /// be asking anyone for a key.
+    var usesRelay: Bool {
+        ai?.isRelay == true || video?.isRelay == true
+    }
+
     /// Accepts either a full URL or a bare host (optionally with a path).
     ///
     /// `.xcconfig` files treat `//` as the start of a comment, so a scheme

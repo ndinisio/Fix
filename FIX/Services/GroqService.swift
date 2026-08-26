@@ -53,6 +53,17 @@ final class GroqService: AIService {
         return plan
     }
 
+    /// Checks that the credentials work, without spending tokens on a
+    /// completion. Listing models is the cheapest authenticated call there is.
+    func validateCredentials() async throws {
+        var request = URLRequest(url: baseURL().appending(path: "models"))
+        request.httpMethod = "GET"
+        if case .direct(let apiKey) = transport {
+            request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
+        }
+        _ = try await client.data(for: request)
+    }
+
     // MARK: - Request
 
     private func complete<T: Decodable>(
@@ -100,11 +111,13 @@ final class GroqService: AIService {
     }
 
     private func endpointURL() -> URL {
+        baseURL().appending(path: Self.completionsPath)
+    }
+
+    private func baseURL() -> URL {
         switch transport {
-        case .relay(let baseURL):
-            baseURL.appending(path: Self.completionsPath)
-        case .direct:
-            Self.directBaseURL.appending(path: Self.completionsPath)
+        case .relay(let baseURL): baseURL
+        case .direct: Self.directBaseURL
         }
     }
 
