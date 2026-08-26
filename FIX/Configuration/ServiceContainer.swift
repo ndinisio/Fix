@@ -14,17 +14,31 @@ final class ServiceContainer {
     let settings: AppSettings
     let troubleshooting: any TroubleshootingServicing
 
+    /// Anything not supplied is built here rather than in the signature:
+    /// default argument expressions are evaluated outside the initialiser's
+    /// isolation, so a main-actor type cannot be one. Previews and tests pass
+    /// their own services in.
     init(
         configuration: AppConfiguration = .current,
-        settings: AppSettings = AppSettings(),
-        networkMonitor: NetworkMonitor = NetworkMonitor()
+        settings: AppSettings? = nil,
+        networkMonitor: NetworkMonitor? = nil,
+        troubleshooting: (any TroubleshootingServicing)? = nil
     ) {
         self.configuration = configuration
-        self.settings = settings
-        self.networkMonitor = networkMonitor
+        self.settings = settings ?? AppSettings()
+        self.networkMonitor = networkMonitor ?? NetworkMonitor()
+        self.troubleshooting = troubleshooting ?? Self.makeTroubleshooting(for: configuration)
+    }
 
-        // A fallback chain with one provider today. Adding a second is a change
-        // to this array and nothing else.
+    /// Builds the diagnosis pipeline for a configuration.
+    ///
+    /// The provider list is a fallback chain with one provider today; adding a
+    /// second is a change to this array and nothing else. With nothing
+    /// configured, `UnconfiguredAIService` makes that an ordinary error rather
+    /// than a special case threaded through the app.
+    private static func makeTroubleshooting(
+        for configuration: AppConfiguration
+    ) -> any TroubleshootingServicing {
         let providers: [any AIService] = configuration.ai.map {
             [GroqService(transport: $0, model: configuration.groqModel)]
         } ?? []
@@ -32,21 +46,7 @@ final class ServiceContainer {
             ? UnconfiguredAIService()
             : FallbackAIService(providers: providers)
         let videoSearch = configuration.video.map { YouTubeVideoSearchService(transport: $0) }
-
-        self.troubleshooting = TroubleshootingService(ai: ai, videoSearch: videoSearch)
-    }
-
-    /// For previews and tests, where the services are supplied directly.
-    init(
-        configuration: AppConfiguration,
-        settings: AppSettings,
-        networkMonitor: NetworkMonitor,
-        troubleshooting: any TroubleshootingServicing
-    ) {
-        self.configuration = configuration
-        self.settings = settings
-        self.networkMonitor = networkMonitor
-        self.troubleshooting = troubleshooting
+        return TroubleshootingService(ai: ai, videoSearch: videoSearch)
     }
 }
 

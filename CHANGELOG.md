@@ -2,6 +2,19 @@
 
 All notable changes to FIX. Grouped by version, newest first.
 
+## v0.6 — First build fixes
+
+### Fixed
+- `ServiceContainer` used `AppSettings()` and `NetworkMonitor()` as default
+  argument values. Default argument expressions are evaluated outside the
+  initialiser's isolation in Swift 5 language mode, so a main-actor type cannot
+  be one — this failed to compile. The two initialisers are now one, with
+  optional parameters and the services built in the body, where main-actor
+  isolation applies. Previews and tests inject theirs unchanged.
+- `NetworkMonitor`'s `deinit` reached main-actor-isolated stored properties.
+  The monitor and its queue are now `nonisolated(unsafe)`, which is accurate:
+  both are internally synchronised and neither is mutated after init.
+
 ## v0.5 — Make the project open with its files visible
 
 ### Fixed

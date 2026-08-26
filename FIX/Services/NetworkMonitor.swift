@@ -12,8 +12,14 @@ import Observation
 final class NetworkMonitor {
     private(set) var isConnected: Bool = true
 
-    @ObservationIgnored private let monitor = NWPathMonitor()
-    @ObservationIgnored private let queue = DispatchQueue(label: "com.fix.network-monitor")
+    // `nonisolated(unsafe)` because `deinit` runs outside the main actor and
+    // has to reach these. Both are safe to touch from any thread: NWPathMonitor
+    // and DispatchQueue are internally synchronised, and neither is mutated
+    // after this initialiser.
+    @ObservationIgnored nonisolated(unsafe) private let monitor = NWPathMonitor()
+    @ObservationIgnored nonisolated(unsafe) private let queue = DispatchQueue(
+        label: "com.fix.network-monitor"
+    )
 
     init() {
         monitor.pathUpdateHandler = { [weak self] path in
