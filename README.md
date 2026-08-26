@@ -309,5 +309,8 @@ Or ⌘U in Xcode. Written with Swift Testing, covering:
   is written to be concurrency-clean — view models are `@MainActor`, models are
   `Sendable`, caches are actors — so moving the target to Swift 6 should be a
   build-setting change rather than a rewrite.
-- **Project file.** `FIX.xcodeproj` uses Xcode's synchronized folder groups, so
-  files added on disk are picked up without editing the project file.
+- **Project file.** `FIX.xcodeproj` lists every file explicitly, which is the
+  format Xcode has always written and every version can open. Xcode maintains it
+  for you when you add files through its UI; if you add or remove sources from
+  the filesystem instead, run `python3 Scripts/generate-project.py` from the
+  repository root to rebuild it from what is on disk.

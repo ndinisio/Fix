@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A10000000000000000000010"
+               BlueprintIdentifier = "E3435DDA2687639586BF0B70"
                BuildableName = "FIX.app"
                BlueprintName = "FIX"
                ReferencedContainer = "container:FIX.xcodeproj">
@@ -32,7 +32,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A10000000000000000000011"
+               BlueprintIdentifier = "A700229C3AC2DAE057FE5B27"
                BuildableName = "FIXTests.xctest"
                BlueprintName = "FIXTests"
                ReferencedContainer = "container:FIX.xcodeproj">
@@ -54,7 +54,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A10000000000000000000010"
+            BlueprintIdentifier = "E3435DDA2687639586BF0B70"
             BuildableName = "FIX.app"
             BlueprintName = "FIX"
             ReferencedContainer = "container:FIX.xcodeproj">
@@ -71,7 +71,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A10000000000000000000010"
+            BlueprintIdentifier = "E3435DDA2687639586BF0B70"
             BuildableName = "FIX.app"
             BlueprintName = "FIX"
             ReferencedContainer = "container:FIX.xcodeproj">

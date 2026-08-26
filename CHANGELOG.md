@@ -2,6 +2,20 @@
 
 All notable changes to FIX. Grouped by version, newest first.
 
+## v0.5 — Make the project open with its files visible
+
+### Fixed
+- `FIX.xcodeproj` was written using Xcode 16's synchronized folder groups, which
+  show an empty navigator in any Xcode that does not process them — the code was
+  in the repository but invisible in the project. The project file now lists all
+  59 sources explicitly, the format every Xcode version reads.
+- The shared scheme referenced the previous target identifiers and would not
+  have built or run.
+
+### Added
+- `Scripts/generate-project.py`, which rebuilds the project file from the files
+  on disk, so adding sources outside Xcode cannot silently leave them out.
+
 ## v0.3 — Tests and documentation
 
 ### Added
