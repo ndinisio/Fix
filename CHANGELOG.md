@@ -2,6 +2,25 @@
 
 All notable changes to Fix. Grouped by version, newest first.
 
+## v1.0 — One project, one layout
+
+### Changed
+- App resources are grouped under `Fix/Resources/`: `Assets.xcassets`,
+  `Info.plist` and `Preview Content` now sit with the target they belong to, so
+  `Fix/` contains code folders plus one resources folder and nothing else.
+  `Config/` holds build configuration only.
+- `INFOPLIST_FILE` and `DEVELOPMENT_ASSET_PATHS` follow. Info.plist stays a
+  plain reference rather than a copied resource.
+
+### Added
+- `Scripts/generate-project.py` refuses to run when it finds more than one
+  `.xcodeproj`, or one anywhere other than the repository root. A stray project
+  merged into the sources folder by a case-insensitive filesystem is invisible
+  in Finder but shadows the real one in Xcode.
+- README documents the full layout, explains why `Fix/Fix/` is correct, and
+  warns about cloning into a directory that already contains a similarly named
+  folder.
+
 ## v0.9 — Rename FIX to Fix
 
 ### Changed

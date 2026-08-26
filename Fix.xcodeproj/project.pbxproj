@@ -25,8 +25,6 @@
 			path = "App";
 			sourceTree = "<group>";
 		};
-		62B3C3553C27CAD3D1E47DD9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Assets.xcassets"; sourceTree = "<group>"; };
-		14AA1DBAA54F32BEDF9AE785 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 62B3C3553C27CAD3D1E47DD9 /* Assets.xcassets */; };
 		848183A53D693EF4C98C8CC5 /* AppConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppConfiguration.swift"; sourceTree = "<group>"; };
 		7ECE0F8F7D60DD0A3C7A5C6D /* AppConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848183A53D693EF4C98C8CC5 /* AppConfiguration.swift */; };
 		0BAC1D7B3C10BB14D7271AA3 /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppSettings.swift"; sourceTree = "<group>"; };
@@ -106,20 +104,25 @@
 			path = "Persistence";
 			sourceTree = "<group>";
 		};
-		12D3020DBAEDE540DC8EC254 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		629839E02DCC5DB37F8D1040 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 12D3020DBAEDE540DC8EC254 /* Preview Assets.xcassets */; };
-		94AACECD04B203EB26413C74 /* Preview Content */ = {
+		CFA72C07E5144A0437CF4E7A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Assets.xcassets"; sourceTree = "<group>"; };
+		DFDAEE76F5006C656A3B3779 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CFA72C07E5144A0437CF4E7A /* Assets.xcassets */; };
+		5BB98D1C74B360CEA27EBA24 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		A4EEB2D0A24B65711573DF24 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5BB98D1C74B360CEA27EBA24 /* Preview Assets.xcassets */; };
+		05AD275C5B189303A4140465 /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
-				12D3020DBAEDE540DC8EC254 /* Preview Assets.xcassets */,
+				5BB98D1C74B360CEA27EBA24 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		E7C9B2162ABE637D2DD01991 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info.plist"; sourceTree = "<group>"; };
 		1026FED1A8CB42B4AFF1795D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-
+				CFA72C07E5144A0437CF4E7A /* Assets.xcassets */,
+				05AD275C5B189303A4140465 /* Preview Content */,
+				E7C9B2162ABE637D2DD01991 /* Info.plist */,
 			);
 			path = "Resources";
 			sourceTree = "<group>";
@@ -303,12 +306,10 @@
 			isa = PBXGroup;
 			children = (
 				DEE7F80C57204920F149B5BC /* App */,
-				62B3C3553C27CAD3D1E47DD9 /* Assets.xcassets */,
 				8E1D2D2525CDBC2EF189C609 /* Configuration */,
 				EC79E6F9CC82921D71F6AF98 /* Models */,
 				ED893674D102E8478B2F230A /* Networking */,
 				98811E583190C61C08383376 /* Persistence */,
-				94AACECD04B203EB26413C74 /* Preview Content */,
 				1026FED1A8CB42B4AFF1795D /* Resources */,
 				6F366B640CEC0D3BE8BC3974 /* Services */,
 				0ECE953714D2B7E73FBD1E99 /* Utilities */,
@@ -356,13 +357,11 @@
 			sourceTree = "<group>";
 		};
 		0C989B914EB3A37D8F7C94E3 /* Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Base.xcconfig"; sourceTree = "<group>"; };
-		E3E2446FE3174E769C0799E1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info.plist"; sourceTree = "<group>"; };
 		7D9ACC9D34FD11B88219E1C9 /* Secrets.example.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Secrets.example.xcconfig"; sourceTree = "<group>"; };
 		BD13AA3ACFF3D0C2ED6E4720 /* Config */ = {
 			isa = PBXGroup;
 			children = (
 				0C989B914EB3A37D8F7C94E3 /* Base.xcconfig */,
-				E3E2446FE3174E769C0799E1 /* Info.plist */,
 				7D9ACC9D34FD11B88219E1C9 /* Secrets.example.xcconfig */,
 			);
 			path = "Config";
@@ -458,8 +457,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				14AA1DBAA54F32BEDF9AE785 /* Assets.xcassets in Resources */,
-				629839E02DCC5DB37F8D1040 /* Preview Assets.xcassets in Resources */,
+				DFDAEE76F5006C656A3B3779 /* Assets.xcassets in Resources */,
+				A4EEB2D0A24B65711573DF24 /* Preview Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -708,10 +707,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Fix/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Fix/Resources/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = Config/Info.plist;
+				INFOPLIST_FILE = Fix/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -732,10 +731,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Fix/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Fix/Resources/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = Config/Info.plist;
+				INFOPLIST_FILE = Fix/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

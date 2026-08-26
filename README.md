@@ -30,6 +30,11 @@ model, you work through steps and tell the app what happened.
 
 ## Getting started
 
+> **Cloning onto a Mac.** Apple filesystems are case-insensitive, so a folder
+> that differs only in case from one in the repository will be merged with it
+> rather than kept separate. Clone into an empty directory, or move anything
+> already there out of the way first.
+
 1. Open `Fix.xcodeproj` in Xcode 26 or later.
 2. Select the **Fix** scheme and an iOS 26 simulator.
 3. Build and run.
@@ -137,17 +142,31 @@ on the device either way.
 ## Architecture
 
 ```text
-Fix/
-├── App/              FixApp, RootView, AppRouter, App Intents
-├── Configuration/    AppConfiguration, AppSettings, ServiceContainer
-├── Models/           Diagnosis, TroubleshootingSession, VideoResult, DeviceCatalog…
-├── Networking/       APIClient, APIError
-├── Services/         AIService, GroqService, VideoSearchService, TroubleshootingService…
-├── Persistence/      SwiftData models and Library
-├── ViewModels/       DiagnoseViewModel, SessionViewModel, DeviceCareViewModel
-├── Views/            Diagnose, Session, History, Devices, Settings, Components
-└── Utilities/        Text formatting
+Fix/                          the repository
+├── Fix.xcodeproj             the one and only project, always at the root
+├── Fix/                      the app target's sources
+│   ├── App/                  entry point, root view, router, App Intents
+│   ├── Configuration/        AppConfiguration, AppSettings, CredentialStore, ServiceContainer
+│   ├── Models/               Diagnosis, TroubleshootingSession, VideoResult, DeviceCatalog…
+│   ├── Networking/           APIClient, APIError
+│   ├── Persistence/          SwiftData models, Library, Keychain storage
+│   ├── Services/             AI and video providers, orchestration, prompts
+│   ├── Utilities/            text formatting
+│   ├── ViewModels/           one per screen
+│   ├── Views/                Diagnose, Session, History, Devices, Settings, Components
+│   └── Resources/            Assets.xcassets, Info.plist, Preview Content
+├── FixTests/                 the test target
+├── Config/                   build configuration (xcconfig only, no secrets)
+├── Scripts/                  generate-project.py
+├── README.md
+└── CHANGELOG.md
 ```
+
+`Fix/Fix/` is not a mistake: a repository named after its app contains both the
+project and a sources folder of the same name, which is how Xcode lays out every
+app it generates. What is *not* normal is a second `.xcodeproj` inside that
+sources folder — if you ever see one, it is a stray, and
+`Scripts/generate-project.py` refuses to run until it is gone.
 
 The dependency direction is one-way: views depend on view models, view models on
 services, services on networking and models. Nothing points back up.
@@ -309,6 +328,10 @@ Or ⌘U in Xcode. Written with Swift Testing, covering:
   is written to be concurrency-clean — view models are `@MainActor`, models are
   `Sendable`, caches are actors — so moving the target to Swift 6 should be a
   build-setting change rather than a rewrite.
+- **Info.plist** lives with the target it configures, at `Fix/Resources/`, and is
+  referenced by `INFOPLIST_FILE` rather than copied into the bundle. `Config/`
+  holds build configuration only, so there is one obvious place for secrets to
+  not be.
 - **Project file.** `Fix.xcodeproj` lists every file explicitly, which is the
   format Xcode has always written and every version can open. Xcode maintains it
   for you when you add files through its UI; if you add or remove sources from

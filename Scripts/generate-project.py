@@ -14,6 +14,19 @@ import hashlib, os, pathlib, sys
 
 ROOT = pathlib.Path('.')
 
+# There must be exactly one project, at the repository root. A second one —
+# usually a leftover template that a case-insensitive filesystem merged into the
+# sources folder — silently shadows this one in Xcode's file browser.
+projects = [p for p in ROOT.glob('**/*.xcodeproj') if '.git' not in p.parts]
+if len(projects) > 1:
+    print('More than one .xcodeproj found. Remove the stray ones before continuing:')
+    for project in sorted(projects):
+        print('  ', project)
+    raise SystemExit(1)
+if projects and projects[0].parent != ROOT:
+    print(f'The project must sit at the repository root, not {projects[0]}')
+    raise SystemExit(1)
+
 def uid(seed):
     """Deterministic 24-character uppercase hex id."""
     return hashlib.md5(seed.encode()).hexdigest()[:24].upper()
@@ -308,10 +321,10 @@ APP_SETTINGS = '''\t\t\t\tASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 \t\t\t\tASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 \t\t\t\tCODE_SIGN_STYLE = Automatic;
 \t\t\t\tCURRENT_PROJECT_VERSION = 1;
-\t\t\t\tDEVELOPMENT_ASSET_PATHS = "\\"Fix/Preview Content\\"";
+\t\t\t\tDEVELOPMENT_ASSET_PATHS = "\\"Fix/Resources/Preview Content\\"";
 \t\t\t\tENABLE_PREVIEWS = YES;
 \t\t\t\tGENERATE_INFOPLIST_FILE = NO;
-\t\t\t\tINFOPLIST_FILE = Config/Info.plist;
+\t\t\t\tINFOPLIST_FILE = Fix/Resources/Info.plist;
 \t\t\t\tLD_RUNPATH_SEARCH_PATHS = (
 \t\t\t\t\t"$(inherited)",
 \t\t\t\t\t"@executable_path/Frameworks",
