@@ -1,6 +1,17 @@
 # Changelog
 
-All notable changes to FIX. Grouped by version, newest first.
+All notable changes to Fix. Grouped by version, newest first.
+
+## v0.9 — Rename FIX to Fix
+
+### Changed
+- The app is called **Fix**, not FIX, everywhere it is read: display name,
+  interface copy, type names (`FixApp`, `FixPrompt`, `FixShortcuts`), file and
+  folder names, the Xcode project, both targets, the scheme, the module, and
+  the bundle identifiers (`com.example.Fix`, `com.example.FixTests`).
+- The `FIX_` prefix on build settings and scheme environment variables is
+  unchanged. Uppercase is the convention for environment variables, so
+  `FIX_GROQ_API_KEY` stays as it is.
 
 ## v0.8 — Enter an API key in the app
 
@@ -53,7 +64,7 @@ All notable changes to FIX. Grouped by version, newest first.
 ## v0.5 — Make the project open with its files visible
 
 ### Fixed
-- `FIX.xcodeproj` was written using Xcode 16's synchronized folder groups, which
+- `Fix.xcodeproj` was written using Xcode 16's synchronized folder groups, which
   show an empty navigator in any Xcode that does not process them — the code was
   in the repository but invisible in the project. The project file now lists all
   59 sources explicitly, the format every Xcode version reads.
@@ -85,7 +96,7 @@ All notable changes to FIX. Grouped by version, newest first.
 - `AIService` and `VideoSearchService` protocols with `GroqService` and
   `YouTubeVideoSearchService` implementations, each supporting a relay or a
   direct key. `FallbackAIService` provides the provider chain.
-- `FIXPrompt`: the diagnostic instructions, including safety rules that take
+- `FixPrompt`: the diagnostic instructions, including safety rules that take
   priority over troubleshooting, and a request for search terms written for
   video search rather than the user's raw text.
 - `TroubleshootingService`, which runs a diagnosis end to end, reports the

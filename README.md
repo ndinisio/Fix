@@ -1,6 +1,6 @@
-# FIX
+# Fix
 
-FIX is an iOS app for fixing the things you own — and for keeping them working
+Fix is an iOS app for fixing the things you own — and for keeping them working
 once they are fixed. You tell it what the device is and what it is doing; it
 gives you a diagnosis, an ordered set of things to try, the safety warnings that
 apply, repair videos, and the habits that stop the problem coming back.
@@ -30,8 +30,8 @@ model, you work through steps and tell the app what happened.
 
 ## Getting started
 
-1. Open `FIX.xcodeproj` in Xcode 26 or later.
-2. Select the **FIX** scheme and an iOS 26 simulator.
+1. Open `Fix.xcodeproj` in Xcode 26 or later.
+2. Select the **Fix** scheme and an iOS 26 simulator.
 3. Build and run.
 
 The app builds and runs with no configuration at all. Without an AI provider it
@@ -39,11 +39,11 @@ still launches, browses history and saved devices, and says plainly in Settings
 that new diagnoses are unavailable — it never invents an answer to fill the gap.
 
 Before running on a device, set your own team and bundle identifier in
-**Signing & Capabilities**. The project ships with `com.example.FIX`.
+**Signing & Capabilities**. The project ships with `com.example.Fix`.
 
 ### Add the app icon yourself
 
-`FIX/Assets.xcassets/AppIcon.appiconset` is deliberately empty. Icons are worth
+`Fix/Assets.xcassets/AppIcon.appiconset` is deliberately empty. Icons are worth
 drawing rather than generating, and asset-catalog surgery is safer done in
 Xcode: drop a 1024×1024 image onto the AppIcon slot when you have one.
 
@@ -110,7 +110,7 @@ A relay is a thin credential-adding proxy. It needs two routes.
 OpenAI-compatible endpoint, adding the `Authorization` header, and return Groq's
 response unchanged. The app sends the model, messages and `response_format`.
 
-**`GET {base}/videos?q=…&limit=…`** — search for videos and return FIX's own
+**`GET {base}/videos?q=…&limit=…`** — search for videos and return Fix's own
 shape, so the relay decides which provider it uses:
 
 ```json
@@ -137,8 +137,8 @@ on the device either way.
 ## Architecture
 
 ```text
-FIX/
-├── App/              FIXApp, RootView, AppRouter, App Intents
+Fix/
+├── App/              FixApp, RootView, AppRouter, App Intents
 ├── Configuration/    AppConfiguration, AppSettings, ServiceContainer
 ├── Models/           Diagnosis, TroubleshootingSession, VideoResult, DeviceCatalog…
 ├── Networking/       APIClient, APIError
@@ -201,7 +201,7 @@ VideoSearchService  →  ranked results
 Session                       saved, resumable, works offline afterwards
 ```
 
-When every step has been tried without success, FIX sends the same problem back
+When every step has been tried without success, Fix sends the same problem back
 with the failures attached and appends a new round. It does not restart the
 diagnosis, and it does not repeat what already failed.
 
@@ -271,7 +271,7 @@ benefit.
 ## Tests
 
 ```sh
-xcodebuild test -scheme FIX -destination 'platform=iOS Simulator,name=iPhone 17'
+xcodebuild test -scheme Fix -destination 'platform=iOS Simulator,name=iPhone 17'
 ```
 
 Or ⌘U in Xcode. Written with Swift Testing, covering:
@@ -309,7 +309,7 @@ Or ⌘U in Xcode. Written with Swift Testing, covering:
   is written to be concurrency-clean — view models are `@MainActor`, models are
   `Sendable`, caches are actors — so moving the target to Swift 6 should be a
   build-setting change rather than a rewrite.
-- **Project file.** `FIX.xcodeproj` lists every file explicitly, which is the
+- **Project file.** `Fix.xcodeproj` lists every file explicitly, which is the
   format Xcode has always written and every version can open. Xcode maintains it
   for you when you add files through its UI; if you add or remove sources from
   the filesystem instead, run `python3 Scripts/generate-project.py` from the

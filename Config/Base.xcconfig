@@ -1,4 +1,4 @@
-// FIX — shared build configuration.
+// Fix — shared build configuration.
 //
 // Everything here is a *default*. Real values belong in Config/Secrets.xcconfig,
 // which is git-ignored. Copy Config/Secrets.example.xcconfig to get started.
