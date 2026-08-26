@@ -20,7 +20,14 @@ struct DiagnosisRequest: Hashable, Sendable {
     ) {
         self.device = device.trimmingCharacters(in: .whitespacesAndNewlines)
         self.problem = problem.trimmingCharacters(in: .whitespacesAndNewlines)
-        self.details = details
+        // Re-run the details through their own initialiser: whatever route the
+        // values arrived by, what gets sent is trimmed, and a field left blank
+        // is absent rather than an empty string.
+        self.details = ProblemDetails(
+            onset: details.onset,
+            alreadyTried: details.alreadyTried,
+            errorMessage: details.errorMessage
+        )
         self.history = history
     }
 
