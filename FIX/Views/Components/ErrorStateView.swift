@@ -7,8 +7,8 @@ import SwiftUI
 /// could actually change the outcome.
 struct ErrorStateView: View {
     let error: APIError
-    var retry: (() async -> Void)?
-    var openSettings: (() -> Void)?
+    var retry: (() async -> Void)? = nil
+    var openSettings: (() -> Void)? = nil
 
     var body: some View {
         ContentUnavailableView {

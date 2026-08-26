@@ -46,9 +46,7 @@ struct SessionView: View {
     private var results: some View {
         List {
             if model.session.isSolved { solvedSection }
-            if hasDangerWarning { safetySection }
-            summarySection
-            if !hasDangerWarning, !warnings.isEmpty { safetySection }
+            diagnosisHeader
             stepsSection
             if model.session.canContinue { continueSection }
             if !causes.isEmpty { causesSection }
@@ -69,6 +67,15 @@ struct SessionView: View {
             }
         }
         .sensoryFeedback(.success, trigger: model.session.isSolved)
+    }
+
+    /// Safety first when it is serious, then the diagnosis, then the milder
+    /// cautions. Grouped so the ordering rule lives in one place.
+    @ViewBuilder
+    private var diagnosisHeader: some View {
+        if hasDangerWarning { safetySection }
+        summarySection
+        if !hasDangerWarning, !warnings.isEmpty { safetySection }
     }
 
     private var solvedSection: some View {
