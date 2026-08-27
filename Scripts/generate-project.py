@@ -31,9 +31,20 @@ def uid(seed):
     """Deterministic 24-character uppercase hex id."""
     return hashlib.md5(seed.encode()).hexdigest()[:24].upper()
 
+icons = [p for p in ROOT.glob('Fix/**/*.icon') if '.git' not in p.parts]
+appiconsets = [p for p in ROOT.glob('Fix/**/AppIcon.appiconset')]
+clashing = [p for p in icons if p.stem == 'AppIcon']
+if clashing and appiconsets:
+    print('Both an Icon Composer icon and an app icon set are named AppIcon:')
+    for path in clashing + appiconsets:
+        print('  ', path)
+    print('Keep one. Delete the AppIcon.appiconset folder if you are using the .icon file.')
+    raise SystemExit(1)
+
 FILE_TYPES = {
     '.swift': 'sourcecode.swift',
     '.xcassets': 'folder.assetcatalog',
+    '.icon': 'folder.iconcomposer.icon',
     '.plist': 'text.plist.xml',
     '.xcconfig': 'text.xcconfig',
     '.md': 'net.daringfireball.markdown',
@@ -73,7 +84,7 @@ def walk(directory, target):
         if entry.name.startswith('.'):
             continue
         if entry.is_dir():
-            if entry.suffix == '.xcassets':
+            if entry.suffix in ('.xcassets', '.icon'):
                 fid = file_ref(rel)
                 build_file(fid, rel, target, 'Resources')
                 children.append((fid, entry.name))

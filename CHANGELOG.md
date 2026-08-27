@@ -2,6 +2,19 @@
 
 All notable changes to Fix. Grouped by version, newest first.
 
+## v1.1 — A place for the app icon
+
+### Added
+- `Scripts/generate-project.py` recognises Icon Composer documents: a `.icon`
+  package under `Fix/` is referenced as an icon document and added to the app
+  target's resources, so dropping one in and regenerating is all it takes.
+- A guard for the case where an `AppIcon.icon` and an `AppIcon.appiconset` both
+  exist. Both claim `ASSETCATALOG_COMPILER_APPICON_NAME`, and the build failure
+  that follows does not explain itself.
+- README documents both routes to an app icon — an Icon Composer document at
+  `Fix/Resources/AppIcon.icon`, or a 1024×1024 PNG in the app icon set — and
+  what to check in Xcode afterwards.
+
 ## v1.0 — One project, one layout
 
 ### Changed

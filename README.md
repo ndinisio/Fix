@@ -46,11 +46,33 @@ that new diagnoses are unavailable — it never invents an answer to fill the ga
 Before running on a device, set your own team and bundle identifier in
 **Signing & Capabilities**. The project ships with `com.example.Fix`.
 
-### Add the app icon yourself
+### App icon
 
-`Fix/Assets.xcassets/AppIcon.appiconset` is deliberately empty. Icons are worth
-drawing rather than generating, and asset-catalog surgery is safer done in
-Xcode: drop a 1024×1024 image onto the AppIcon slot when you have one.
+The icon slot ships empty. There are two ways to fill it — pick one, not both.
+
+**An Icon Composer document** (Xcode 26, and what you want for a Liquid Glass
+icon):
+
+1. Save the document from Icon Composer as **`AppIcon.icon`**.
+2. Put it at `Fix/Resources/AppIcon.icon`.
+3. Delete `Fix/Resources/Assets.xcassets/AppIcon.appiconset` — both would claim
+   the name `AppIcon`, and the resulting build failure does not say so.
+   `Scripts/generate-project.py` refuses to run while they coexist.
+4. Drag the file into Xcode's navigator, or run
+   `python3 Scripts/generate-project.py` to pick it up from disk.
+5. Check the Fix target → **General → App Icons** — the dropdown should read
+   `AppIcon`.
+
+Naming it `AppIcon.icon` means `ASSETCATALOG_COMPILER_APPICON_NAME` already
+matches and no build setting has to change.
+
+**A 1024×1024 PNG**: drag it onto the AppIcon slot inside `Assets.xcassets` in
+Xcode, which writes the filename into the app icon set for you. Leave the
+`.icon` route alone if you go this way.
+
+If Xcode lists the `.icon` as an ordinary folder instead of an icon document,
+select it and correct the type in the File Inspector, or re-pick the icon in the
+General tab — either rewrites the reference correctly.
 
 ---
 
