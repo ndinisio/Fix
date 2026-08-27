@@ -25,6 +25,9 @@ struct APIKeyView: View {
             } else {
                 keySection(model: model)
                 statusSection
+                if model.service == .ai, services.configuration.isAIConfigured {
+                    modelSection
+                }
                 if services.credentials.hasKey(for: model.service) {
                     removeSection
                 }
@@ -100,6 +103,23 @@ struct APIKeyView: View {
             }
         } footer: {
             Text(model.service.purpose)
+        }
+    }
+
+    private var modelSection: some View {
+        Section {
+            NavigationLink {
+                ModelPickerView()
+            } label: {
+                LabeledContent("Model") {
+                    Text(services.configuration.groqModel)
+                        .foregroundStyle(.secondary)
+                        .lineLimit(1)
+                        .truncationMode(.middle)
+                }
+            }
+        } footer: {
+            Text("Models come and go. If a diagnosis is refused, the one selected here may have been retired.")
         }
     }
 

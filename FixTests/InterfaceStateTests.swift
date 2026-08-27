@@ -108,6 +108,7 @@ struct InterfaceStateTests {
         let errors: [APIError] = [
             .offline, .notConfigured, .timedOut, .rateLimited(retryAfter: nil),
             .server(statusCode: 500), .unauthorized, .invalidResponse, .cancelled,
+            .rejected(detail: nil), .rejected(detail: "Model decommissioned"),
             .underlying(description: "Something went wrong.")
         ]
 

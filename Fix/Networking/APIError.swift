@@ -10,6 +10,10 @@ enum APIError: Error, Equatable, Sendable {
     case notConfigured
     case timedOut
     case rateLimited(retryAfter: TimeInterval?)
+    /// The provider understood the request and refused it — an unknown model,
+    /// a malformed body, a withdrawn endpoint. Retrying changes nothing, so the
+    /// provider's own explanation is carried through.
+    case rejected(detail: String?)
     case server(statusCode: Int)
     case unauthorized
     case invalidResponse
@@ -22,6 +26,7 @@ enum APIError: Error, Equatable, Sendable {
         case .notConfigured: "Diagnosis Unavailable"
         case .timedOut: "That Took Too Long"
         case .rateLimited: "Too Many Requests"
+        case .rejected: "The Provider Refused That"
         case .server: "Something Went Wrong"
         case .unauthorized: "Diagnosis Unavailable"
         case .invalidResponse: "Couldn't Read the Answer"
@@ -45,6 +50,12 @@ enum APIError: Error, Equatable, Sendable {
             } else {
                 "Too many diagnoses at once. Wait a moment and try again."
             }
+        case .rejected(let detail):
+            if let detail {
+                "\(detail)\n\nIf this names a model, pick a different one in Settings."
+            } else {
+                "The provider wouldn't accept the request. The model chosen in Settings may no longer be available."
+            }
         case .server:
             "The service is having trouble. Try again shortly."
         case .unauthorized:
@@ -62,7 +73,8 @@ enum APIError: Error, Equatable, Sendable {
     /// the app is unconfigured or the credentials are wrong.
     var isRetryable: Bool {
         switch self {
-        case .notConfigured, .unauthorized, .cancelled: false
+        // Retrying a refusal repeats it: something has to change first.
+        case .notConfigured, .unauthorized, .cancelled, .rejected: false
         default: true
         }
     }
@@ -71,7 +83,7 @@ enum APIError: Error, Equatable, Sendable {
     var symbolName: String {
         switch self {
         case .offline: "wifi.slash"
-        case .notConfigured, .unauthorized: "gearshape"
+        case .notConfigured, .unauthorized, .rejected: "gearshape"
         case .timedOut: "clock.badge.exclamationmark"
         case .rateLimited: "hourglass"
         case .cancelled: "xmark.circle"

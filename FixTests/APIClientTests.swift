@@ -91,6 +91,49 @@ struct APIClientTests {
         #expect(StubURLProtocol.recordedRequests.count == 1)
     }
 
+    @Test func aRefusedRequestCarriesTheProvidersExplanation() async throws {
+        StubURLProtocol.reset()
+        StubURLProtocol.respond(
+            status: 404,
+            json: #"{"error":{"message":"The model `llama-x` does not exist","type":"invalid_request_error"}}"#
+        )
+
+        await #expect(
+            throws: APIError.rejected(detail: "The model `llama-x` does not exist")
+        ) {
+            _ = try await StubURLProtocol.makeClient().data(for: request)
+        }
+        #expect(StubURLProtocol.recordedRequests.count == 1, "Retrying a refusal repeats it")
+    }
+
+    @Test func aRefusalWithNoBodyStillReportsUsefully() async throws {
+        StubURLProtocol.reset()
+        StubURLProtocol.respond(status: 400, json: "")
+
+        await #expect(throws: APIError.rejected(detail: nil)) {
+            _ = try await StubURLProtocol.makeClient().data(for: request)
+        }
+    }
+
+    @Test func rateLimitsAreNotTreatedAsRefusals() async throws {
+        StubURLProtocol.reset()
+        StubURLProtocol.respond(status: 429, headers: ["Retry-After": "5"])
+
+        await #expect(throws: APIError.rateLimited(retryAfter: 5)) {
+            _ = try await StubURLProtocol.makeClient(maxAttempts: 1).data(for: request)
+        }
+    }
+
+    @Test func readsErrorMessagesFromBothProviders() {
+        let groq = #"{"error":{"message":"Model decommissioned","type":"invalid_request_error"}}"#
+        let youTube = #"{"error":{"code":403,"message":"API key not valid","errors":[]}}"#
+
+        #expect(APIClient.providerMessage(from: Data(groq.utf8)) == "Model decommissioned")
+        #expect(APIClient.providerMessage(from: Data(youTube.utf8)) == "API key not valid")
+        #expect(APIClient.providerMessage(from: Data("not json".utf8)) == nil)
+        #expect(APIClient.providerMessage(from: Data(#"{"error":{}}"#.utf8)) == nil)
+    }
+
     @Test func backoffGrows() {
         #expect(APIClient.backoff(for: 1) < APIClient.backoff(for: 2))
         #expect(APIClient.backoff(for: 2) < APIClient.backoff(for: 3))
@@ -100,6 +143,8 @@ struct APIClientTests {
         #expect(APIError.offline.isRetryable)
         #expect(!APIError.notConfigured.isRetryable)
         #expect(!APIError.unauthorized.isRetryable)
+        #expect(!APIError.rejected(detail: nil).isRetryable)
+        #expect(APIError.rejected(detail: "Model gone").guidance.contains("Model gone"))
         #expect(!APIError.offline.guidance.isEmpty)
         #expect(APIError.rateLimited(retryAfter: 30).guidance.contains("30"))
     }

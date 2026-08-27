@@ -59,6 +59,10 @@ final class APIClient: @unchecked Sendable {
                         throw APIError.rateLimited(retryAfter: retryAfter)
                     }
                     try await sleep(retryAfter ?? Self.backoff(for: attempt))
+                case 400..<500:
+                    // The request itself was refused. The provider says why,
+                    // and that explanation is worth far more than a status code.
+                    throw APIError.rejected(detail: Self.providerMessage(from: data))
                 case 500..<600:
                     guard attempt < maxAttempts else {
                         throw APIError.server(statusCode: http.statusCode)
@@ -90,6 +94,22 @@ final class APIClient: @unchecked Sendable {
     /// that the user is not left staring at a progress view.
     static func backoff(for attempt: Int) -> TimeInterval {
         0.6 * pow(3, Double(attempt - 1))
+    }
+
+    /// Pulls the human-readable message out of a provider's error body. Groq
+    /// and the YouTube Data API both nest it at `error.message`.
+    static func providerMessage(from data: Data) -> String? {
+        struct Envelope: Decodable {
+            struct Failure: Decodable {
+                let message: String?
+            }
+            let error: Failure?
+        }
+        guard let envelope = try? JSONDecoder().decode(Envelope.self, from: data),
+              let message = envelope.error?.message?.trimmingCharacters(in: .whitespacesAndNewlines),
+              !message.isEmpty
+        else { return nil }
+        return message
     }
 
     private static func retryAfter(from response: HTTPURLResponse) -> TimeInterval? {

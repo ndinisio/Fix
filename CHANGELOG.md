@@ -2,6 +2,22 @@
 
 All notable changes to Fix. Grouped by version, newest first.
 
+## v1.3 — Say what the provider actually said
+
+### Fixed
+- A refused request (400, 404, 422…) was reported as `.server`, so a rejected
+  request read as "the service is having trouble" and the provider's
+  explanation was discarded. Those statuses now map to `APIError.rejected`,
+  which carries the provider's own message — Groq and the YouTube Data API both
+  put it at `error.message` — and is correctly not retryable.
+
+### Added
+- The AI model is chosen in Settings → AI Provider → Model, from a list the
+  provider returns for that key. A model named in code is right only until it is
+  retired, and this removes that failure mode rather than deferring it.
+- `AppSettings.groqModel` persists the choice; `ServiceContainer` folds it into
+  the effective configuration and rebuilds, so it applies without a restart.
+
 ## v1.2 — Real bundle identifier
 
 ### Changed

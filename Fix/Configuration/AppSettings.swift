@@ -14,14 +14,22 @@ final class AppSettings {
         didSet { defaults.set(includeVideos, forKey: Key.includeVideos) }
     }
 
+    /// The model chosen in Settings, overriding the build's default. Not a
+    /// secret, so it lives in preferences rather than the Keychain.
+    var groqModel: String? {
+        didSet { defaults.set(groqModel, forKey: Key.groqModel) }
+    }
+
     @ObservationIgnored private let defaults: UserDefaults
 
     private enum Key {
         static let includeVideos = "settings.includeVideos"
+        static let groqModel = "settings.groqModel"
     }
 
     init(defaults: UserDefaults = .standard) {
         self.defaults = defaults
         self.includeVideos = defaults.object(forKey: Key.includeVideos) as? Bool ?? true
+        self.groqModel = defaults.string(forKey: Key.groqModel)?.nilIfBlank
     }
 }

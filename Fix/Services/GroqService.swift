@@ -64,6 +64,25 @@ final class GroqService: AIService {
         _ = try await client.data(for: request)
     }
 
+    /// The models this key can use, newest naming first. Asking the provider
+    /// beats hard-coding a list that goes stale the moment a model is retired.
+    func availableModels() async throws -> [String] {
+        var request = URLRequest(url: baseURL().appending(path: "models"))
+        request.httpMethod = "GET"
+        if case .direct(let apiKey) = transport {
+            request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
+        }
+        let list: ModelList = try await client.send(request, decoding: ModelList.self)
+        return list.data.map(\.id).sorted()
+    }
+
+    private struct ModelList: Decodable {
+        struct Entry: Decodable {
+            let id: String
+        }
+        let data: [Entry]
+    }
+
     // MARK: - Request
 
     private func complete<T: Decodable>(

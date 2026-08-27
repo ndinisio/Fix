@@ -36,26 +36,30 @@ final class ServiceContainer {
         troubleshooting: (any TroubleshootingServicing)? = nil
     ) {
         let credentials = credentials ?? CredentialStore()
-        let effective = configuration.applying(
+        let settings = settings ?? AppSettings()
+        var effective = configuration.applying(
             groqAPIKey: credentials.key(for: .ai),
             youTubeAPIKey: credentials.key(for: .video)
         )
+        if let model = settings.groqModel { effective.groqModel = model }
         self.buildConfiguration = configuration
         self.credentials = credentials
-        self.settings = settings ?? AppSettings()
+        self.settings = settings
         self.networkMonitor = networkMonitor ?? NetworkMonitor()
         self.injectedTroubleshooting = troubleshooting
         self.configuration = effective
         self.troubleshooting = troubleshooting ?? Self.makeTroubleshooting(for: effective)
     }
 
-    /// Rebuilds the pipeline after the user adds or removes a key, so a new
-    /// diagnosis uses it without restarting the app.
+    /// Rebuilds the pipeline after the user changes a key or picks a different
+    /// model, so the next diagnosis uses it without restarting the app.
     func credentialsDidChange() {
-        configuration = buildConfiguration.applying(
+        var effective = buildConfiguration.applying(
             groqAPIKey: credentials.key(for: .ai),
             youTubeAPIKey: credentials.key(for: .video)
         )
+        if let model = settings.groqModel { effective.groqModel = model }
+        configuration = effective
         troubleshooting = injectedTroubleshooting ?? Self.makeTroubleshooting(for: configuration)
     }
 
