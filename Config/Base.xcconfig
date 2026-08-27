@@ -17,4 +17,9 @@ FIX_GROQ_API_KEY =
 FIX_GROQ_MODEL = llama-3.3-70b-versatile
 FIX_YOUTUBE_API_KEY =
 
+// Your signing team, so Xcode does not have to write it into the project file
+// (where it would be overwritten on every regeneration, and would conflict on
+// every pull). See Config/Local.example.xcconfig.
+#include? "Local.xcconfig"
+
 #include? "Secrets.xcconfig"

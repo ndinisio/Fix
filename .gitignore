@@ -33,6 +33,7 @@ playground.xcworkspace
 # Secrets — never commit these.
 # See Config/Secrets.example.xcconfig for the template.
 Config/Secrets.xcconfig
+Config/Local.xcconfig
 .env
 .env.*
 !.env.example

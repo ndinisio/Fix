@@ -1,0 +1,11 @@
+// Copy this file to Config/Local.xcconfig and fill in your details.
+// Config/Local.xcconfig is git-ignored: it is personal to your machine and
+// your Apple ID, not part of the project.
+//
+// Find your team identifier in Xcode: Settings -> Accounts -> your Apple ID ->
+// the Team ID column. It looks like ABCDE12345.
+//
+// Setting it here rather than in the Signing & Capabilities tab keeps it out of
+// project.pbxproj, so pulling and regenerating the project never disturb it.
+
+DEVELOPMENT_TEAM =

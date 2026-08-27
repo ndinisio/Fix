@@ -43,9 +43,24 @@ The app builds and runs with no configuration at all. Without an AI provider it
 still launches, browses history and saved devices, and says plainly in Settings
 that new diagnoses are unavailable — it never invents an answer to fill the gap.
 
-The bundle identifier is `com.ndinisio.Fix`. Before running on a device, set
-your team in **Signing & Capabilities** — that is tied to an Apple ID and is not
-stored in the repository.
+The bundle identifier is `com.ndinisio.Fix`. To run on a device you need a
+signing team. Set it in a local file rather than in Xcode's Signing tab:
+
+```sh
+cp Config/Local.example.xcconfig Config/Local.xcconfig
+```
+
+Put your team identifier in it (Xcode → Settings → Accounts → your Apple ID →
+Team ID):
+
+```
+DEVELOPMENT_TEAM = ABCDE12345
+```
+
+`Config/Local.xcconfig` is git-ignored. Setting the team this way keeps it out
+of `project.pbxproj`, so pulling and regenerating the project never disturb it —
+whereas choosing it in the Signing & Capabilities tab writes it into the project
+file, where it conflicts on the next pull.
 
 ### App icon
 

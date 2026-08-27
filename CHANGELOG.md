@@ -2,6 +2,16 @@
 
 All notable changes to Fix. Grouped by version, newest first.
 
+## v1.4 — Keep signing out of the project file
+
+### Changed
+- The signing team is read from `Config/Local.xcconfig`, which is git-ignored,
+  instead of being written into `project.pbxproj` by Xcode's Signing tab.
+  Choosing a team there edited a tracked file, so every pull conflicted and
+  every project regeneration discarded it.
+- `Config/Local.example.xcconfig` is the template; the README explains where to
+  find a Team ID.
+
 ## v1.3 — Say what the provider actually said
 
 ### Fixed
