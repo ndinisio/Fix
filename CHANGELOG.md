@@ -2,6 +2,13 @@
 
 All notable changes to Fix. Grouped by version, newest first.
 
+## v1.2 — Real bundle identifier
+
+### Changed
+- Bundle identifiers are `com.ndinisio.Fix` and `com.ndinisio.FixTests`,
+  replacing the `com.example` placeholders. The signing team stays out of the
+  repository: it is tied to an Apple ID and belongs in Xcode.
+
 ## v1.1 — A place for the app icon
 
 ### Added

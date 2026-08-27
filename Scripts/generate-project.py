@@ -341,7 +341,7 @@ APP_SETTINGS = '''\t\t\t\tASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 \t\t\t\t\t"@executable_path/Frameworks",
 \t\t\t\t);
 \t\t\t\tMARKETING_VERSION = 1.0;
-\t\t\t\tPRODUCT_BUNDLE_IDENTIFIER = com.example.Fix;
+\t\t\t\tPRODUCT_BUNDLE_IDENTIFIER = com.ndinisio.Fix;
 \t\t\t\tPRODUCT_NAME = "$(TARGET_NAME)";
 \t\t\t\tSWIFT_EMIT_LOC_STRINGS = YES;
 \t\t\t\tSWIFT_VERSION = 5.0;
@@ -351,7 +351,7 @@ TEST_SETTINGS = '''\t\t\t\tBUNDLE_LOADER = "$(TEST_HOST)";
 \t\t\t\tCURRENT_PROJECT_VERSION = 1;
 \t\t\t\tGENERATE_INFOPLIST_FILE = YES;
 \t\t\t\tMARKETING_VERSION = 1.0;
-\t\t\t\tPRODUCT_BUNDLE_IDENTIFIER = com.example.FixTests;
+\t\t\t\tPRODUCT_BUNDLE_IDENTIFIER = com.ndinisio.FixTests;
 \t\t\t\tPRODUCT_NAME = "$(TARGET_NAME)";
 \t\t\t\tSWIFT_EMIT_LOC_STRINGS = NO;
 \t\t\t\tSWIFT_VERSION = 5.0;

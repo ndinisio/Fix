@@ -43,8 +43,9 @@ The app builds and runs with no configuration at all. Without an AI provider it
 still launches, browses history and saved devices, and says plainly in Settings
 that new diagnoses are unavailable — it never invents an answer to fill the gap.
 
-Before running on a device, set your own team and bundle identifier in
-**Signing & Capabilities**. The project ships with `com.example.Fix`.
+The bundle identifier is `com.ndinisio.Fix`. Before running on a device, set
+your team in **Signing & Capabilities** — that is tied to an Apple ID and is not
+stored in the repository.
 
 ### App icon
 
