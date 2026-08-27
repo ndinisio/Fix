@@ -2,6 +2,16 @@
 
 All notable changes to Fix. Grouped by version, newest first.
 
+## v1.7 — Keep machine-local files out of the project
+
+### Fixed
+- `Scripts/generate-project.py` referenced `Config/Local.xcconfig` and
+  `Config/Secrets.xcconfig` when they happened to exist. Both are git-ignored,
+  so the reference was committed by whoever had them and showed as a missing
+  red file for everyone else — and the project file differed between machines
+  depending on who last regenerated it. Both are skipped now, and
+  `Base.xcconfig` includes them optionally, so nothing needs a reference.
+
 ## v1.4 — Keep signing out of the project file
 
 ### Changed

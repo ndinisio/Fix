@@ -364,14 +364,12 @@
 		};
 		0C989B914EB3A37D8F7C94E3 /* Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Base.xcconfig"; sourceTree = "<group>"; };
 		E044C1EC5D7510B21745F9E1 /* Local.example.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Local.example.xcconfig"; sourceTree = "<group>"; };
-		2DF72077FC71AF93BD4719B8 /* Local.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Local.xcconfig"; sourceTree = "<group>"; };
 		7D9ACC9D34FD11B88219E1C9 /* Secrets.example.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Secrets.example.xcconfig"; sourceTree = "<group>"; };
 		BD13AA3ACFF3D0C2ED6E4720 /* Config */ = {
 			isa = PBXGroup;
 			children = (
 				0C989B914EB3A37D8F7C94E3 /* Base.xcconfig */,
 				E044C1EC5D7510B21745F9E1 /* Local.example.xcconfig */,
-				2DF72077FC71AF93BD4719B8 /* Local.xcconfig */,
 				7D9ACC9D34FD11B88219E1C9 /* Secrets.example.xcconfig */,
 			);
 			path = "Config";

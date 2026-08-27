@@ -41,6 +41,12 @@ if clashing and appiconsets:
     print('Keep one. Delete the AppIcon.appiconset folder if you are using the .icon file.')
     raise SystemExit(1)
 
+# Files that exist only on one machine. They are git-ignored, so referencing
+# them would put a red, missing file in everyone else's project navigator and
+# make the project file differ between machines. Base.xcconfig includes them
+# optionally, so nothing needs a reference to them.
+LOCAL_ONLY = {'Local.xcconfig', 'Secrets.xcconfig'}
+
 FILE_TYPES = {
     '.swift': 'sourcecode.swift',
     '.xcassets': 'folder.assetcatalog',
@@ -81,7 +87,7 @@ def walk(directory, target):
     entries = sorted(directory.iterdir(), key=lambda p: (p.is_file(), p.name.lower()))
     for entry in entries:
         rel = entry.relative_to(ROOT)
-        if entry.name.startswith('.'):
+        if entry.name.startswith('.') or entry.name in LOCAL_ONLY:
             continue
         if entry.is_dir():
             if entry.suffix in ('.xcassets', '.icon'):
