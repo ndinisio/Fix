@@ -20,6 +20,17 @@
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>FixConfiguration</key>
+	<dict>
+		<key>GroqAPIKey</key>
+		<string>$(FIX_GROQ_API_KEY)</string>
+		<key>GroqModel</key>
+		<string>$(FIX_GROQ_MODEL)</string>
+		<key>RelayBaseURL</key>
+		<string>$(FIX_RELAY_BASE_URL)</string>
+		<key>YouTubeAPIKey</key>
+		<string>$(FIX_YOUTUBE_API_KEY)</string>
+	</dict>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSRequiresIPhoneOS</key>
@@ -44,16 +55,5 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>FixConfiguration</key>
-	<dict>
-		<key>RelayBaseURL</key>
-		<string>$(FIX_RELAY_BASE_URL)</string>
-		<key>GroqAPIKey</key>
-		<string>$(FIX_GROQ_API_KEY)</string>
-		<key>GroqModel</key>
-		<string>$(FIX_GROQ_MODEL)</string>
-		<key>YouTubeAPIKey</key>
-		<string>$(FIX_YOUTUBE_API_KEY)</string>
-	</dict>
 </dict>
 </plist>

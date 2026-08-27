@@ -104,6 +104,8 @@
 			path = "Persistence";
 			sourceTree = "<group>";
 		};
+		9839C390BAE54004ADFE6769 /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = "AppIcon.icon"; sourceTree = "<group>"; };
+		4FFE206B82C206B3F7CA9224 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 9839C390BAE54004ADFE6769 /* AppIcon.icon */; };
 		CFA72C07E5144A0437CF4E7A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Assets.xcassets"; sourceTree = "<group>"; };
 		DFDAEE76F5006C656A3B3779 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CFA72C07E5144A0437CF4E7A /* Assets.xcassets */; };
 		5BB98D1C74B360CEA27EBA24 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -120,6 +122,7 @@
 		1026FED1A8CB42B4AFF1795D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				9839C390BAE54004ADFE6769 /* AppIcon.icon */,
 				CFA72C07E5144A0437CF4E7A /* Assets.xcassets */,
 				05AD275C5B189303A4140465 /* Preview Content */,
 				E7C9B2162ABE637D2DD01991 /* Info.plist */,
@@ -361,12 +364,14 @@
 		};
 		0C989B914EB3A37D8F7C94E3 /* Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Base.xcconfig"; sourceTree = "<group>"; };
 		E044C1EC5D7510B21745F9E1 /* Local.example.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Local.example.xcconfig"; sourceTree = "<group>"; };
+		2DF72077FC71AF93BD4719B8 /* Local.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Local.xcconfig"; sourceTree = "<group>"; };
 		7D9ACC9D34FD11B88219E1C9 /* Secrets.example.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Secrets.example.xcconfig"; sourceTree = "<group>"; };
 		BD13AA3ACFF3D0C2ED6E4720 /* Config */ = {
 			isa = PBXGroup;
 			children = (
 				0C989B914EB3A37D8F7C94E3 /* Base.xcconfig */,
 				E044C1EC5D7510B21745F9E1 /* Local.example.xcconfig */,
+				2DF72077FC71AF93BD4719B8 /* Local.xcconfig */,
 				7D9ACC9D34FD11B88219E1C9 /* Secrets.example.xcconfig */,
 			);
 			path = "Config";
@@ -463,6 +468,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4FFE206B82C206B3F7CA9224 /* AppIcon.icon in Resources */,
 				DFDAEE76F5006C656A3B3779 /* Assets.xcassets in Resources */,
 				A4EEB2D0A24B65711573DF24 /* Preview Assets.xcassets in Resources */,
 			);
