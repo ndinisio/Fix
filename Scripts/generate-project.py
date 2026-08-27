@@ -331,7 +331,6 @@ add(f'''\t\t{PROJ_RELEASE} /* Release */ = {{
 APP_SETTINGS = '''\t\t\t\tASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 \t\t\t\tASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 \t\t\t\tCODE_SIGN_STYLE = Automatic;
-\t\t\t\tDEVELOPMENT_TEAM = $(inherited);
 \t\t\t\tCURRENT_PROJECT_VERSION = 1;
 \t\t\t\tDEVELOPMENT_ASSET_PATHS = "\\"Fix/Resources/Preview Content\\"";
 \t\t\t\tENABLE_PREVIEWS = YES;
